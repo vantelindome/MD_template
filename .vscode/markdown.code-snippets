@@ -1,0 +1,20 @@
+{
+    "Image for GitHub markdown with clipboard": {
+        "prefix": [
+            "img",
+            "image"
+        ],
+        "body": [
+            "<img src=\"$CLIPBOARD\" width=\"500\" height=\"500\" alt=\"$1\" >"
+        ]
+    },
+    "Image for GitHub markdown without clipboard": {
+        "prefix": [
+            "img",
+            "image"
+        ],
+        "body": [
+            "<img src=\"$1\" width=\"500\" height=\"500\" alt=\"$2\" >"
+        ]
+    }
+}

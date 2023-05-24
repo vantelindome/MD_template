@@ -1,0 +1,4 @@
+# Load amber gpu on flow type 1
+
+module load amber/19.0
+export PATH="${AMBERHOME}/bin:${PATH}"

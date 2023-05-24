@@ -1,0 +1,58 @@
+import os
+from pathlib import Path
+
+GROUP_INTERS = ["inter_residue", "inter_side"]
+GROUP_TYPES = GROUP_INTERS + ["intra_dimer_even", "intra_dimer_odd", "intra_whole"]
+SAMPLES = { group: os.listdir(f"input/{group}") for group in GROUP_TYPES}
+PLOTS_AUTOMATED = [p.stem.replace("plot_", "") for p in Path("script/automated").iterdir() if p.is_file() & p.match("plot_*")]
+PLOTS_RESIDUE_AND_SIDE = [p.stem.replace("plot_", "") for p in Path("script/residue_and_side").iterdir() if p.is_file() & p.match("plot_*")]
+
+
+rule all:
+    input:
+        expand("output/conductivity/{group}.csv", group=GROUP_TYPES),
+        expand("output/graphs/automated/{group}-{plot}.png", group=GROUP_TYPES, plot=PLOTS_AUTOMATED),
+        expand("output/graphs/residue_and_side/{group}-{plot}.png", group=GROUP_INTERS, plot=PLOTS_RESIDUE_AND_SIDE),
+        "output/README.md","output/index.html"
+
+rule get_ensemble:
+    input:
+        samples=lambda wildcards: expand("input/{group}/{sample}", group=wildcards.group, sample=SAMPLES[wildcards.group])
+    params:
+        outdir="output/conductivity"
+    output:
+        file="output/conductivity/{group}.csv"
+    script:
+        "script/get_ensemble.py"
+
+rule plots:
+    input: "output/conductivity/{group}.csv"
+    params:
+        outdir="output/graphs/automated"
+    output: "output/graphs/automated/{group}-{plot}.png"
+    script: "script/automated/plot_{wildcards.plot}.py"
+
+rule plots_residue_and_side:
+    input: "output/conductivity/{group}.csv"
+    params:
+        outdir="output/graphs/residue_and_side"
+    output: "output/graphs/residue_and_side/{group}-{plot}.png"
+    script: "script/residue_and_side/plot_{wildcards.plot}.py"
+
+rule list_graphs_as_md:
+    input:
+        expand("output/graphs/automated/{group}-{plot}.png", group=GROUP_TYPES, plot=PLOTS_AUTOMATED),
+        expand("output/graphs/residue_and_side/{group}-{plot}.png", group=GROUP_INTERS, plot=PLOTS_RESIDUE_AND_SIDE),
+    params:
+        outdir="output"
+    output: "output/README.md"
+    script: "script/create_md_to_show_graphs.py"
+
+rule list_graphs_as_html:
+    input:
+        expand("output/graphs/automated/{group}-{plot}.png", group=GROUP_TYPES, plot=PLOTS_AUTOMATED),
+        expand("output/graphs/residue_and_side/{group}-{plot}.png", group=GROUP_INTERS, plot=PLOTS_RESIDUE_AND_SIDE),
+    params:
+        outdir="output"
+    output: "output/index.html"
+    script: "script/create_html_to_show_graphs.py"

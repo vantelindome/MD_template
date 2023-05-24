@@ -1,0 +1,4 @@
+# Load amber gpu on flow type 2
+module load gcc/8.4.0 openmpi/4.0.4 cuda/10.1.243 amber_gpu/18
+
+export PATH="${AMBERHOME}/bin:${PATH}"

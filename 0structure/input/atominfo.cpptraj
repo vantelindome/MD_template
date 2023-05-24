@@ -1,0 +1,3 @@
+parm output/system.dry.prmtop
+atominfo out output/atominfo.dat
+quit

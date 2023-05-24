@@ -1,0 +1,27 @@
+# Load force field parameters
+source leaprc.protein.ff14SB
+source leaprc.gaff2
+source leaprc.water.tip3p
+
+loadamberparams output/FMN.frcmod # Load forcefield infomation
+FMN = loadmol2 output/FMN.mol2 # Load charge information
+
+fmn = loadPDB output/FMN_taken_out_of_original.pdb # Load FMN coordinates
+structure = loadPDB input/protein.pdb # Load polypeptide coodinates
+
+system = combine{ fmn structure }
+
+check system
+savepdb system output/system.dry.pdb
+saveAmberParm system output/system.dry.prmtop output/system.dry.crd
+
+solvateOct system TIP3PBOX 10 iso
+
+addIons2 system Na+ 0
+addIonsRand system Na+ 21 Cl- 21
+
+check system
+savepdb system output/system.pdb
+saveAmberParm system output/system.prmtop output/system.crd
+
+quit

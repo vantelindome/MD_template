@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Plots viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.min.js"
+        integrity="sha512-2HLzgJH7ZNywnEDB1HqijieFxszStt3QXS8Qk9m/VMUV/asMWlz9PmibHsvWIz9rtKOOr28z8zu1iJ3pf/TTHQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.css"
+        integrity="sha512-caKp8jXImkCfnEGA8RCJPQeW/+wtI9reknlKZMlKnIE8RHgxMBCppLsPvM429eoo0+PSZc9J/dQjVH3OH/K3Xg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div>
+        <h2>Click image what you would like to watch</h2>
+        <ul id="images">
+            ~images
+        </ul>
+    </div>
+    <script>
+        const gallery = new Viewer(document.getElementById('images'), {
+            url(image) {
+                const url = image.src.replace("resized/", "graphs/")
+                return url
+            }
+        });
+    </script>
+</body>
+
+</html>

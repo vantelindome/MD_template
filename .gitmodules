@@ -1,0 +1,3 @@
+[submodule "FMN"]
+	path = FMN
+	url = git@github.com:flat35hd99/ligand_design.git

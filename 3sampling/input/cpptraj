@@ -1,0 +1,20 @@
+# This cpptraj input file is used in "output/sampling_number/step_name/"
+parm ../../../../0structure/output/system.prmtop
+trajin md.crd.nc
+reference ../../../../0structure/output/system.crd [crd]
+
+# According to example of part V, chapter 32, section 11, item 83 Amber 20 reference
+unwrap :1-255
+center :1-255 mass origin
+image origin center familiar
+
+rmsf ALL :1-255&!@H= byres out rmsf_all.agr 
+rmsf MAIN :1-255&!@N,CA,C= byres out rmsf_main.agr
+rmsf RESIDUE :1-255&!@N,H,CA,HA,C,O= byres out rmsf_residue.agr
+
+rmsd rmsd_all  ref [crd] :1-255&!@H= out rmsd_mass_all.agr 
+rmsd rmsd_main ref [crd] :1-255&!@N,CA,C= out rmsd_mass_main.agr
+rmsd rmsd_side ref [crd] :1-255&!@N,H,CA,HA,C,O= out rmsd_mass_side.agr
+
+run
+quit

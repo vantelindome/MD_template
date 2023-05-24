@@ -1,0 +1,126 @@
+# -------------------------------------------
+# Install netcdf4-python using intel compiler
+# -------------------------------------------
+# module load intel/2019.5.281 pnetcdf parallel-netcdf/1.12.1 phdf5/1.10.6
+# pip install numpy
+# conda intall pygraphviz -y
+# git clone https://github.com/Unidata/netcdf4-python.git
+# cd netcdf4-python
+# python setup.py build
+# > Failed
+# pip install mpi4py --no-cache-dir
+# python setup.py build --compiler intel
+# > Failed
+# python setup.py build --compiler=intel
+# export CC=mpiicc
+# export CXX=mpiicpc
+# python setup.py build
+# > Success.but in last line, gcc used.
+# python setup.py install
+# > Failed
+
+# ---------------------------------
+# Install netcdf using gnu compiler
+# ---------------------------------
+# module purge
+# rm netcdf4-python/ -rf
+# git clone https://github.com/Unidata/netcdf4-python.git
+# module load gcc/8.4.0 openmpi/4.1.1
+# wget https://parallel-netcdf.github.io/Release/pnetcdf-1.12.3.tar.gz
+# tar -xvf pnetcdf-1.12.3.tar.gz
+# cd pnetcdf-1.12.3
+# ./configure --prefix=/home/z44550r/package/pnetcdf/1.12.3
+# > failed because compiler cannot be found
+# export CC=gcc
+# export CXX=g++
+# export FC=gfortran
+# ./configure --prefix=/home/z44550r/package/pnetcdf/1.12.3
+# > warn because fortran compiler is not mpi compiler
+# export CC=mpicc
+# export CXX=mpicxx
+# export FC=mpifort
+# ./configure --prefix=/home/z44550r/package/pnetcdf/1.12.3
+# > success
+# make -j8
+# make install
+# > success.
+
+# ---------------------------------
+# Install mpi4py using gnu compiler
+# ---------------------------------
+# conda activate py2curpLm
+# pip uninstall mpi4py
+# module purge
+# module load gcc/8.4.0 openmpi/4.1.1
+# export CC=mpicc
+# export CXX=mpicxx
+# export FC=mpifort
+# pip install mpi4py --no-cache-dir
+
+# ---------------------------------
+# Install netcdf using gnu compiler
+# ---------------------------------
+# module purge
+# rm netcdf4-python/ -rf
+# git clone https://github.com/Unidata/netcdf4-python.git
+# git checkout v1.5.3rel
+# export CC=mpicc
+# export CXX=mpicxx
+# export FC=mpifort
+# module load gcc/8.4.0 openmpi/4.1.1 pnetcdf
+# cd netcdf4-python
+# python setup.py build
+# > failed due to header not found
+
+# export CC=mpicc
+# export CXX=mpicxx
+# export FC=mpifort
+# module load gcc/8.4.0 openmpi/4.1.1 pnetcdf
+# wget https://downloads.unidata.ucar.edu/netcdf-c/4.8.1/netcdf-c-4.8.1.tar.gz
+# tar -xvf netcdf-c-4.8.1.tar.gz
+# mkdir ~/package/netcdf
+# cd netcdf-c-4.8.1
+# ./configure --prefix /home/z44550r/package/netcdf/4.8.1
+# > warn: parallel-io is not supported
+# ./configure --prefix /home/z44550r/package/netcdf/4.8.1 --enable-parallel
+# > fail: parallel HDF5 not detected
+
+# export CC=mpicc
+# export CXX=mpicxx
+# export FC=mpifort
+# module load gcc/8.4.0 openmpi/4.1.1 pnetcdf
+# ./configure --enable-parallel --prefix=/home/z44550r/package/hdf5/1.12.1
+# make -j8
+# make check
+# > fail see below
+# ===================================
+# ***PHDF5 tests detected 1536 errors***
+# ===================================
+# --------------------------------------------------------------------------
+# Primary job  terminated normally, but 1 process returned
+# a non-zero exit code. Per user-direction, the job has been aborted.
+# --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# mpiexec detected that one or more processes exited with non-zero status, thus causing
+# the job to be terminated. The first process to do so was:
+
+#   Process name: [[58015,1],4]
+#   Exit code:    1
+# --------------------------------------------------------------------------
+# 11.77user 6.37system 0:07.59elapsed 238%CPU (0avgtext+0avgdata 274900maxresident)k
+# 1056inputs+91312outputs (15major+663562minor)pagefaults 0swaps
+# make[4]: *** [testphdf5.chkexe_] Error 1
+# make[4]: Leaving directory `/data/group1/z44550r/work/hdf5-1.12.1/testpar'
+# make[3]: *** [build-check-p] Error 1
+# make[3]: Leaving directory `/data/group1/z44550r/work/hdf5-1.12.1/testpar'
+# make[2]: *** [test] Error 2
+# make[2]: Leaving directory `/data/group1/z44550r/work/hdf5-1.12.1/testpar'
+# make[1]: *** [check-am] Error 2
+# make[1]: Leaving directory `/data/group1/z44550r/work/hdf5-1.12.1/testpar'
+# make: *** [check-recursive] Error 1
+
+# If you use other place, please change conda_path
+conda_path=$HOME/miniconda3_x86_64
+
+eval "$($conda_path/bin/conda shell.bash hook)"
+conda activate py2curpLm

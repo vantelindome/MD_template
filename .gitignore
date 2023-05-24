@@ -1,0 +1,13 @@
+output/
+log/
+5curp/group_pair
+*.log
+*.tar.gz
+.archive/
+.snakemake/
+__pycache__/
+*.ipynb
+*.pdf
+*.csl
+
+node_modules/

@@ -1,0 +1,12 @@
+bccb505067019f28fc66a20670d25c34  output/FMN.frcmod
+e02c61a51cba2aee3af09b1a584ce2e6  output/FMN.mol2
+e0df154e7a196757f3ff1f4b14782f8d  output/FMN_taken_out_of_original.pdb
+fd18c1297ed70ac00872233e2a261e1e  output/atomgroup_residue.dat
+56ddf2a2766d3aab1a1650b22bb175d1  output/atomgroup_side.dat
+70fe9161790cab638ff5923ba00ba1f7  output/atominfo.dat
+6fc0b876e5549e81ae26a2cac07350e6  output/system.crd
+c0a8e8d05169ab1114a0e9ef40348034  output/system.dry.crd
+86bee52849b463de8cee30bbdffbfce3  output/system.dry.pdb
+8dfb04dbd8d9a52a7d9d25c3e94bfd80  output/system.dry.prmtop
+ef9ba5b435a1a27b6f3c559fa5777afd  output/system.pdb
+98d61943d87cfbcc7f775ec841592869  output/system.prmtop

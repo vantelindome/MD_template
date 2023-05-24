@@ -1,0 +1,2 @@
+module purge
+module load amber/20/update12

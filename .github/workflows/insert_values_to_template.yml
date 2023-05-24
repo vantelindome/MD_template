@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+    inputs:
+      project_prefix_variable:
+        description: 'Variable name to point for your project path'
+        default: 'PREFIX_ENVIRONMENTAL_VARIABLE'
+        required: true
+      project_name:
+        description: 'System name'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  insert-values:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Insert values
+        run: |
+          grep -rl 'TEMPLATE_PROJECT_PREFIX' * | xargs sed -i "s@TEMPLATE_PROJECT_PREFIX@${PREFIX}@g"
+          grep -rl 'TEMPLATE_SYSTEM_NAME' * | xargs sed -i -e "s@TEMPLATE_SYSTEM_NAME@${NAME}@g"
+          rm .github/workflows/insert_values_to_template.yml
+        env:
+          PREFIX: ${{ github.event.inputs.project_prefix_variable }}
+          NAME: ${{ github.event.inputs.project_name }}
+
+      - name: Create pull requests
+        uses: peter-evans/create-pull-request@v4

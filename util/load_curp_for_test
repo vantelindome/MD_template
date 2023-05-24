@@ -1,0 +1,22 @@
+module load gcc/8.4.0 openmpi/4.1.1
+
+# If you use other place, please change conda_path
+conda_path=$HOME/miniconda3_x86_64
+
+eval "$($conda_path/bin/conda shell.bash hook)"
+conda activate py2curpTest
+
+# conda create --clone py2curpTest --name py2curpPypi
+# conda activate py2curpPypi
+# pip uninstall curp
+# module load gcc/8.4.0 openmpi/4.1.1
+# pip install curp --no-cache-dir
+# conda activate py2curpPypi
+
+# conda create --clone py2curpTest --name py2curpNumpy -y
+# conda activate py2curpNumpy
+# pip uninstall curp numpy -y
+# module load gcc/8.4.0 openmpi/4.1.1
+# pip install numpy==1.16.5
+# pip install curp --no-cache-dir
+# conda activate py2curpNumpy
